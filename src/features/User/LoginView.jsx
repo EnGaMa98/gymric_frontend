@@ -1,16 +1,13 @@
 import {Grid, Typography} from "@mui/material";
 
-function ProfileView() {
+function LoginView() {
     return (
         <Grid container flexDirection="column" item xs={12}>
             <Typography variant="h3">
-                Mi perfil
-            </Typography>
-            <Typography variant="body1">
-                Alex Bonilla
+                Haz login
             </Typography>
         </Grid>
     )
 }
 
-export default ProfileView;
+export default LoginView;
