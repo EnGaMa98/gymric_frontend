@@ -36,6 +36,7 @@ function ExerciseRingEditDialog({open, setOpen, onChange}) {
             date: currentDate,
         }).then((response) => {
             console.log(response);
+            setLoading(false);
             onChange();
         }).catch((error) => {
             console.log(error);
