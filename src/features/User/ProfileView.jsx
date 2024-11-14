@@ -1,4 +1,5 @@
-import {Grid, Typography, FormControl} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
+import ExerciseRingList from "../ExerciseRing/ExerciseRingList.jsx";
 
 function ProfileView() {
     return (
@@ -9,6 +10,7 @@ function ProfileView() {
             <Typography variant="body1">
                 Alex Bonilla
             </Typography>
+            <ExerciseRingList/>
         </Grid>
     )
 }

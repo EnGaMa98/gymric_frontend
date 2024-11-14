@@ -1,0 +1,1 @@
+export const ENV_API_URL = 'https://api.gymric.fit';
