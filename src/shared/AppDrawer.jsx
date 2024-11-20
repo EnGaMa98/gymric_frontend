@@ -12,6 +12,10 @@ function AppDrawer() {
         {
             label: 'Mi perfil',
             path: '/profile',
+        },
+        {
+            label: 'Goals',
+            path: '/goals',
         }
     ];
 

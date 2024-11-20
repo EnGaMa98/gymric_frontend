@@ -1,54 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, Card, CardContent, Grid, Typography } from '@mui/material';
-import * as ExerciseRingsService from '../../api/services/ExerciseRingsService';
+import {
+    Button,
+    Card,
+    CardContent,
+    Dialog, DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    Grid,
+    TextField,
+    Typography
+} from "@mui/material";
+import { DateCalendar } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { useState } from "react";
+import * as ExerciseRingsService from "../../api/services/ExerciseRingsService.js";
 
-function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing }) {
+function ExerciseRingCreateDialog({ open, setOpen, onChange }) {
     const [loading, setLoading] = useState(false);
     const [moveProgress, setMoveProgress] = useState(null);
     const [exerciseProgress, setExerciseProgress] = useState(null);
     const [standProgress, setStandProgress] = useState(null);
-
-    useEffect(() => {
-        if (exerciseRing) {
-            setMoveProgress(exerciseRing.fields.move_progress);
-            setExerciseProgress(exerciseRing.fields.exercise_progress);
-            setStandProgress(exerciseRing.fields.stand_progress);
-        }
-    }, [exerciseRing]);
+    const [selectedDate, setSelectedDate] = useState(dayjs());
 
     const handleOnClose = () => {
         setOpen(false);
     };
 
-    const handleSave = async () => {
+    const handleSave = () => {
         setLoading(true);
-        try {
-            await ExerciseRingsService.update({
-                id: exerciseRing.id,
-                move_progress: moveProgress,
-                exercise_progress: exerciseProgress,
-                stand_progress: standProgress,
-                date: exerciseRing.fields.date,
-            });
+        ExerciseRingsService.create({
+            move_progress: moveProgress,
+            exercise_progress: exerciseProgress,
+            stand_progress: standProgress,
+            date: selectedDate.format('YYYY-MM-DD'),
+        }).then((response) => {
+            console.log(response);
+            setLoading(false);
             onChange();
             handleOnClose();
-        } catch (error) {
-            console.error("Error al editar el anillo de ejercicio", error);
-        } finally {
+        }).catch((error) => {
+            console.log(error);
             setLoading(false);
-        }
+        });
     };
 
     return (
         <Dialog open={open} onClose={handleOnClose} fullWidth={true} maxWidth="lg">
             <DialogTitle>
                 <Typography variant="body1">
-                    Edita anillo de ejercicio
+                    Crear nuevo anillo de ejercicio
                 </Typography>
             </DialogTitle>
             <DialogContent>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="h3">Selecciona una fecha</Typography>
+                        <Card>
+                            <CardContent>
+                                <DateCalendar value={selectedDate} onChange={(newValue) => setSelectedDate(newValue)} />
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
                         <Typography variant="h3">Introduce los datos del anillo:</Typography>
                         <Card>
                             <CardContent>
@@ -104,4 +117,4 @@ function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing }) {
     );
 }
 
-export default ExerciseRingEditDialog;
+export default ExerciseRingCreateDialog;

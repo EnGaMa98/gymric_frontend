@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, Card, CardContent, Grid, Typography } from '@mui/material';
-import * as ExerciseRingsService from '../../api/services/ExerciseRingsService';
+import React, { useState } from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Grid, Typography, Card, CardContent, FormControl } from '@mui/material';
+import * as GoalsService from "../../api/services/GoalsService.js";
 
-function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing }) {
+function GoalsCreateDialog({ open, setOpen, onChange }) {
     const [loading, setLoading] = useState(false);
-    const [moveProgress, setMoveProgress] = useState(null);
-    const [exerciseProgress, setExerciseProgress] = useState(null);
-    const [standProgress, setStandProgress] = useState(null);
-
-    useEffect(() => {
-        if (exerciseRing) {
-            setMoveProgress(exerciseRing.fields.move_progress);
-            setExerciseProgress(exerciseRing.fields.exercise_progress);
-            setStandProgress(exerciseRing.fields.stand_progress);
-        }
-    }, [exerciseRing]);
+    const [moveGoal, setMoveGoal] = useState('');
+    const [exerciseGoal, setExerciseGoal] = useState('');
+    const [standGoal, setStandGoal] = useState('');
 
     const handleOnClose = () => {
         setOpen(false);
@@ -23,17 +15,16 @@ function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing }) {
     const handleSave = async () => {
         setLoading(true);
         try {
-            await ExerciseRingsService.update({
-                id: exerciseRing.id,
-                move_progress: moveProgress,
-                exercise_progress: exerciseProgress,
-                stand_progress: standProgress,
-                date: exerciseRing.fields.date,
+            await GoalsService.create({
+                move_goal: moveGoal,
+                exercise_goal: exerciseGoal,
+                stand_goal: standGoal,
             });
             onChange();
             handleOnClose();
         } catch (error) {
-            console.error("Error al editar el anillo de ejercicio", error);
+            console.error("Error creando el goal", error);
+            handleOnClose();
         } finally {
             setLoading(false);
         }
@@ -43,42 +34,42 @@ function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing }) {
         <Dialog open={open} onClose={handleOnClose} fullWidth={true} maxWidth="lg">
             <DialogTitle>
                 <Typography variant="body1">
-                    Edita anillo de ejercicio
+                    Crear nuevo Goal
                 </Typography>
             </DialogTitle>
             <DialogContent>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Typography variant="h3">Introduce los datos del anillo:</Typography>
+                        <Typography variant="h3">Detalles:</Typography>
                         <Card>
                             <CardContent>
                                 <FormControl>
                                     <TextField
-                                        label="Calorías"
+                                        label="Move Goal"
                                         type="number"
                                         variant="outlined"
                                         margin="normal"
                                         fullWidth
-                                        value={moveProgress}
-                                        onChange={(event) => setMoveProgress(event.target.value)}
+                                        value={moveGoal}
+                                        onChange={(event) => setMoveGoal(event.target.value)}
                                     />
                                     <TextField
-                                        label="Tiempo de ejercicio"
+                                        label="Exercise Goal"
                                         type="number"
                                         variant="outlined"
                                         margin="normal"
                                         fullWidth
-                                        value={exerciseProgress}
-                                        onChange={(event) => setExerciseProgress(event.target.value)}
+                                        value={exerciseGoal}
+                                        onChange={(event) => setExerciseGoal(event.target.value)}
                                     />
                                     <TextField
-                                        label="Tiempo de pie"
+                                        label="Stand Goal"
                                         type="number"
                                         variant="outlined"
                                         margin="normal"
                                         fullWidth
-                                        value={standProgress}
-                                        onChange={(event) => setStandProgress(event.target.value)}
+                                        value={standGoal}
+                                        onChange={(event) => setStandGoal(event.target.value)}
                                     />
                                     <Button
                                         variant="contained"
@@ -104,4 +95,4 @@ function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing }) {
     );
 }
 
-export default ExerciseRingEditDialog;
+export default GoalsCreateDialog;

@@ -15,3 +15,10 @@ export const get = async (id) => {
 export const create = async (data) => {
     return await CustomAxios.post(data, 'exercise-rings/new');
 }
+
+export const update = async (data) => {
+    return await CustomAxios.put(data, `exercise-rings/${data.id}`);
+}
+export const destroy = async (data) => { 
+    return await CustomAxios.remove(`exercise-rings/${data.id}`);
+}
