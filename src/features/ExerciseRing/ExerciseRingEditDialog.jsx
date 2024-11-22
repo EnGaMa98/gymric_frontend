@@ -2,18 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, FormControl, Card, CardContent, Grid, Typography } from '@mui/material';
 import * as ExerciseRingsService from '../../api/services/ExerciseRingsService';
 
-function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing }) {
+function ExerciseRingEditDialog({open, setOpen, onChange, exerciseRing}) {
     const [loading, setLoading] = useState(false);
     const [moveProgress, setMoveProgress] = useState(null);
     const [exerciseProgress, setExerciseProgress] = useState(null);
     const [standProgress, setStandProgress] = useState(null);
 
     useEffect(() => {
-        if (exerciseRing) {
-            setMoveProgress(exerciseRing.fields.move_progress);
-            setExerciseProgress(exerciseRing.fields.exercise_progress);
-            setStandProgress(exerciseRing.fields.stand_progress);
-        }
+        setMoveProgress(exerciseRing?.fields.value.move ?? '');
+        setExerciseProgress(exerciseRing?.fields.value.exercise ?? '');
+        setStandProgress(exerciseRing?.fields.value.stand ?? '');
     }, [exerciseRing]);
 
     const handleOnClose = () => {
@@ -23,8 +21,7 @@ function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing }) {
     const handleSave = async () => {
         setLoading(true);
         try {
-            await ExerciseRingsService.update({
-                id: exerciseRing.id,
+            await ExerciseRingsService.save(exerciseRing?.id, {
                 move_progress: moveProgress,
                 exercise_progress: exerciseProgress,
                 stand_progress: standProgress,

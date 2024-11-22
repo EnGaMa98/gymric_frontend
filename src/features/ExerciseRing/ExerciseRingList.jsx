@@ -1,17 +1,18 @@
-import {Button, Card, CardContent, CircularProgress, Grid, Typography, LinearProgress} from "@mui/material";
+import {Button, Card, CardContent, CircularProgress, Grid, Typography} from "@mui/material";
 import {format} from "date-fns";
 import {useEffect, useState} from "react";
 import * as ExerciseRingsService from "../../api/services/ExerciseRingsService.js";
-import ExerciseRingCreateDialog from "./ExerciseRingCreateDialog.jsx";
 import ExerciseRingEditDialog from "./ExerciseRingEditDialog.jsx";
+import ExerciseRingListItemProperty from "./ExerciseRingListItemProperty.jsx";
 
 function ExerciseRingList() {
 
-    const [loading, setLoading] = useState(false);
     const [exerciseRings, setExerciseRings] = useState(null);
-    const [openCreateDialog, setOpenCreateDialog] = useState(false);
+    const [exerciseRing, setExerciseRing] = useState(null);
+
+    const [loading, setLoading] = useState(false);
+    
     const [openEditDialog, setOpenEditDialog] = useState(false);
-    const [selectedExerciseRing, setSelectedExerciseRing] = useState(null);
 
     const get = () => {
         if (!loading) {
@@ -37,13 +38,8 @@ function ExerciseRingList() {
         get();
     };
 
-    const handleCreate = () => {
-        setOpenCreateDialog(true);
-        setSelectedExerciseRing(null);
-    };
-
-    const handleEdit = (exerciseRing) => {
-        setSelectedExerciseRing(exerciseRing);
+    const handleEdit = (exerciseRing = null) => {
+        setExerciseRing(exerciseRing);
         setOpenEditDialog(true);
     };
     
@@ -69,7 +65,7 @@ function ExerciseRingList() {
                     <Button onClick={handleRefresh} disabled={loading}>
                         Recargar datos
                     </Button>
-                    <Button variant="contained" onClick={handleCreate} disabled={loading}>
+                    <Button variant="contained" onClick={() => handleEdit()} disabled={loading}>
                         Crear nuevo anillo
                     </Button>
                 </Grid>
@@ -78,8 +74,8 @@ function ExerciseRingList() {
                         <CircularProgress />
                     </Grid>
                 )}
-                {!loading &&
-                    exerciseRings?.map((exerciseRing) => (
+                {
+                    !loading && exerciseRings?.map((exerciseRing) => (
                         <Grid item xs={12} key={exerciseRing.id}>
                             <Card sx={{ my: 1 }}>
                                 <CardContent>
@@ -88,33 +84,15 @@ function ExerciseRingList() {
                                             <Typography variant="body1">
                                                 Fecha: {format(new Date(exerciseRing.fields.date), 'dd/MM/yyyy')}
                                             </Typography>
-                                            <Typography variant="body1">
-                                                Calorías: {exerciseRing.fields.move_progress} / {exerciseRing.fields.move_goal}
-                                            </Typography>
-                                            <LinearProgress
-                                                variant="determinate"
-                                                value={(exerciseRing.fields.move_progress / exerciseRing.fields.move_goal) * 100}
-                                            />
-                                            <Typography variant="body1">
-                                                Tiempo de ejercicio: {exerciseRing.fields.exercise_progress} / {exerciseRing.fields.exercise_goal}
-                                            </Typography>
-                                            <LinearProgress
-                                                variant="determinate"
-                                                value={(exerciseRing.fields.exercise_progress / exerciseRing.fields.exercise_goal) * 100}
-                                            />
-                                            <Typography variant="body1">
-                                                Tiempo de pie: {exerciseRing.fields.stand_progress} / {exerciseRing.fields.stand_goal}
-                                            </Typography>
-                                            <LinearProgress
-                                                variant="determinate"
-                                                value={(exerciseRing.fields.stand_progress / exerciseRing.fields.stand_goal) * 100}
-                                            />
+                                            <ExerciseRingListItemProperty exerciseRing={exerciseRing} property={'move'} label={'Calorías'}/>
+                                            <ExerciseRingListItemProperty exerciseRing={exerciseRing} property={'exercise'} label={'Ejercicio'}/>
+                                            <ExerciseRingListItemProperty exerciseRing={exerciseRing} property={'stand'} label={'Tiempo de pie'}/>
                                         </Grid>
                                         <Grid item xs={12} md={6} container justifyContent="flex-end">
-                                            <Button variant="contained" color="primary" onClick={() => handleEdit(exerciseRing.id)}>
+                                            <Button variant="contained" color="primary" onClick={() => handleEdit(exerciseRing)}>
                                                 Editar
                                             </Button>
-                                            <Button variant="contained" color="secondary" onClick={() => handleDelete(exerciseRing.id)}>
+                                            <Button variant="contained" color="secondary" onClick={() => handleDelete(exerciseRing)}>
                                                 Eliminar
                                             </Button>
                                         </Grid>
@@ -124,15 +102,12 @@ function ExerciseRingList() {
                         </Grid>
                     ))}
             </Grid>
-            <ExerciseRingCreateDialog open={openCreateDialog} setOpen={setOpenCreateDialog} onChange={get} />
-            {selectedExerciseRing && (
-                <ExerciseRingEditDialog
-                    open={openEditDialog}
-                    setOpen={setOpenEditDialog}
-                    onChange={get}
-                    exerciseRing={selectedExerciseRing}
-                />
-            )}
+            <ExerciseRingEditDialog
+                open={openEditDialog}
+                setOpen={setOpenEditDialog}
+                onChange={get}
+                exerciseRing={exerciseRing}
+            />
         </>
     );
 }
