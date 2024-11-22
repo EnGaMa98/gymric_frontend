@@ -25,7 +25,7 @@ function ExerciseRingEditDialog({open, setOpen, onChange, exerciseRing}) {
                 move_progress: moveProgress,
                 exercise_progress: exerciseProgress,
                 stand_progress: standProgress,
-                date: exerciseRing.fields.date,
+                date: exerciseRing?.fields.date,
             });
             onChange();
             handleOnClose();
