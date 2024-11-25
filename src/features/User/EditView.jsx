@@ -61,7 +61,7 @@ function EditView() {
                     fullWidth
                 />
                 <Button onClick={handleSave} variant="contained" color="primary">
-                    Save
+                    Guardar
                 </Button>
             </MenuItem>
         </Menu>
@@ -92,7 +92,7 @@ function EditView() {
                                     variant="contained"
                                     onClick={(event) => handleClick(event, field)}
                                 >
-                                    Edit
+                                    Editar
                                 </Button>
                             </Grid>
                         </CardContent>
