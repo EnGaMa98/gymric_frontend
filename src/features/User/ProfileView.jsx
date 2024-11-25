@@ -11,7 +11,7 @@ function ProfileView() {
 
     useEffect(() => {
         UsersService.get().then((response) => {
-            setUser(response);
+            setUser(response.data);
             setLoading(false);
         });
     }, []);
@@ -66,6 +66,8 @@ function ProfileView() {
             </Grid>
         );
     }
+
+    console.log(user);
 
     return (
         <Grid container spacing={2} flexDirection="column" item xs={12}>
