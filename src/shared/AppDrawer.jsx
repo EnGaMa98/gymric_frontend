@@ -16,6 +16,10 @@ function AppDrawer() {
         {
             label: 'Goals',
             path: '/goals',
+        },
+        {
+            label: 'Editar usuario',
+            path: '/users/me',
         }
     ];
 

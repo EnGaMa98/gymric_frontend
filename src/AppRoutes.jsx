@@ -6,6 +6,7 @@ import PublicLayout from "./layouts/PublicLayout.jsx";
 import LoginView from "./features/User/LoginView.jsx";
 import RegisterView from "./features/User/RegisterView.jsx";
 import GoalsView from "./features/Goals/GoalsView.jsx";
+import EditView from "./features/User/EditView.jsx";
 
 function AppRoutes() {
     return (
@@ -19,6 +20,7 @@ function AppRoutes() {
                 <Route path="/" element={<HomeView/>}/>
                 <Route path="/profile" element={<ProfileView/>}/>
                 <Route path="/goals" element={<GoalsView/>}/>
+                <Route path="/users/me" element={<EditView/>}/>
             </Route>
         </Routes>
     )

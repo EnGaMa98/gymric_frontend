@@ -12,9 +12,10 @@ function GoalsView() {
         setLoading(true);
         try {
             const response = await GoalsService.list();
+            console.log("Goals fetched:", response.data); // Log the fetched goals
             setGoals(response.data);
         } catch (error) {
-            console.error(error);
+            console.error("Error fetching goals:", error);
         } finally {
             setLoading(false);
         }
@@ -26,11 +27,6 @@ function GoalsView() {
 
     const handleCreate = () => {
         setOpenCreateDialog(true);
-        get();
-    };
-
-    const handleRefresh = () => {
-        get();
     };
 
     return (
@@ -40,7 +36,7 @@ function GoalsView() {
                     <Typography variant="h3">Goals</Typography>
                 </Grid>
                 <Grid container item xs={12} justifyContent="end">
-                    <Button onClick={handleRefresh} disabled={loading}>
+                    <Button onClick={get} disabled={loading}>
                         Recargar datos
                     </Button>
                     <Button variant="contained" onClick={handleCreate} disabled={loading}>
@@ -52,23 +48,26 @@ function GoalsView() {
                         <CircularProgress />
                     </Grid>
                 )}
-                {!loading && goals?.map((goal) => (
-                    <Grid item xs={12} key={goal.id}>
-                        <Card sx={{ my: 1 }}>
-                            <CardContent>
-                                <Typography variant="body1">
-                                    Move Goal: {goal.fields.move_goal}
-                                </Typography>
-                                <Typography variant="body1">
-                                    Exercise Goal: {goal.fields.exercise_goal}
-                                </Typography>
-                                <Typography variant="body1">
-                                    Stand Goal: {goal.fields.stand_goal}
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                ))}
+                {!loading && goals?.map((goal) => {
+                    console.log("Goal:", goal);
+                    return (
+                        <Grid item xs={12} key={goal.id}>
+                            <Card sx={{ my: 1 }}>
+                                <CardContent>
+                                    <Typography variant="body1">
+                                        Move Goal: {goal.fields.value.move}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        Exercise Goal: {goal.fields.value.exercise}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        Stand Goal: {goal.fields.value.stand}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    );
+                })}
             </Grid>
             <GoalsCreateDialog open={openCreateDialog} setOpen={setOpenCreateDialog} onChange={get} />
         </>
