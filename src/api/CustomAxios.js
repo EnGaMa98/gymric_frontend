@@ -10,7 +10,7 @@ const CustomAxios = Axios.create({
 CustomAxios.interceptors.request.use(function (config) {
     config.headers = {
         Accept: 'application/json',
-        Authorization: `Bearer ${'91jBOYvCfWS89EXnPh9YTxM43HY0DKlxPqHQZ4gR12cdf1d0'}`, // TODO token
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
     }
     return config;
 }, function (error) {
