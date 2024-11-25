@@ -25,6 +25,7 @@ function LoginView() {
         AuthService.login(data)
             .then((response) => {
                 localStorage.setItem('token', response.token);
+                navigate('/');
                 setLoading(false);
             });
     }

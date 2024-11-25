@@ -6,6 +6,7 @@ import LoginView from "./features/User/LoginView.jsx";
 import RegisterView from "./features/User/RegisterView.jsx";
 import GoalsView from "./features/Goals/GoalsView.jsx";
 import ProfileView from "./features/User/ProfileView.jsx";
+import PrivateAuthGuard from "./features/Auth/PrivateAuthGuard.jsx";
 
 function AppRoutes() {
     return (
@@ -15,10 +16,12 @@ function AppRoutes() {
                 <Route path="/register" element={<RegisterView/>}/>
             </Route>
 
-            <Route element={<PrivateLayout/>}>
-                <Route path="/" element={<HomeView/>}/>
-                <Route path="/goals" element={<GoalsView/>}/>
-                <Route path="/profile" element={<ProfileView/>}/>
+            <Route element={<PrivateAuthGuard/>}>
+                <Route element={<PrivateLayout/>}>
+                    <Route path="/" element={<HomeView/>}/>
+                    <Route path="/goals" element={<GoalsView/>}/>
+                    <Route path="/profile" element={<ProfileView/>}/>
+                </Route>
             </Route>
         </Routes>
     )
