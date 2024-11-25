@@ -18,8 +18,8 @@ function AppDrawer() {
             path: '/goals',
         },
         {
-            label: 'Editar usuario',
-            path: '/users/me',
+            label: 'Usuario',
+            path: '/profile',
         }
     ];
 

@@ -15,8 +15,3 @@ export const get = async (id) => {
 export const create = async (data) => {
     return await CustomAxios.post(data, 'goals/new');
 }
-
-export default {
-    list,
-    create,
-};
