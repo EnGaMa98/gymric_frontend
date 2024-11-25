@@ -27,7 +27,13 @@ function ProfileView() {
     };
 
     const handleChange = (event) => {
-        setUser({ ...user, fields: { ...user.fields, [selectedField]: event.target.value } });
+        setUser({
+            ...user,
+            fields: {
+                ...user.fields,
+                [selectedField]: event.target.value
+            }
+        });
     };
 
     const handleSave = async () => {
@@ -48,7 +54,7 @@ function ProfileView() {
             <MenuItem>
                 <TextField
                     label={selectedField}
-                    value={user && user.fields ? user.fields[selectedField] : ''}
+                    value={user?.fields[selectedField]}
                     onChange={handleChange}
                     fullWidth
                 />
@@ -67,14 +73,13 @@ function ProfileView() {
         );
     }
 
-    console.log(user);
-
     return (
         <Grid container spacing={2} flexDirection="column" item xs={12}>
             <Typography variant="h3">
                 Editar Usuario
             </Typography>
-            {user && user.fields && Object.keys(user.fields).map((field) => (
+            {
+                !!user && Object.keys(user.fields).map((field) => (
                 <Grid item xs={12} key={field}>
                     <Card>
                         <CardContent>
