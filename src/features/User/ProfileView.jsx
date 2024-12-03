@@ -35,16 +35,14 @@ function ProfileView() {
             }
         });
     };
-
-    const handleSave = async () => {
-        try {
-            await UsersService.update('me', { [selectedField]: user.fields[selectedField] });
+    const handleSave = () => {
+        setLoading(true);
+        UsersService.update(null, user.fields).then((response) => {
+            setUser(response);
+            setLoading(false);
             handleClose();
-        } catch (error) {
-            console.error("Error actualizando los datos de usuario:", error);
-        }
+        });
     };
-
     const renderForm = () => (
         <Menu
             anchorEl={anchorEl}
@@ -58,7 +56,7 @@ function ProfileView() {
                     onChange={handleChange}
                     fullWidth
                 />
-                <Button onClick={handleSave} variant="contained" color="primary">
+                <Button onClick={handleSave} variant="contained" color="primary" disabled={loading}>
                     Guardar
                 </Button>
             </MenuItem>
