@@ -8,9 +8,6 @@ export const register = async (data) => {
     return await CustomAxios.post(data, 'users/register');
 }
 
-export const update = async (data) => {
-    return await CustomAxios.put(data, 'users/update');
-}
 export const logout = async (data) => { 
-    return await CustomAxios.post(data, 'users/logout');
+    return await CustomAxios.post(data, 'users/me/logout');
 }

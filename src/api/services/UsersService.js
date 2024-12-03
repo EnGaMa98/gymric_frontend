@@ -5,3 +5,6 @@ export const get = async (id) => {
         include: "",
     }, `users/${id ?? 'me'}`);
 }
+export const update = async (id, data) => {
+    return await CustomAxios.post(data, `users/${id ?? 'me'}`);
+}
