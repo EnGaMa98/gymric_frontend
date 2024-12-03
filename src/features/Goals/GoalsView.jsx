@@ -12,10 +12,10 @@ function GoalsView() {
         setLoading(true);
         try {
             const response = await GoalsService.list();
-            console.log("Goals fetched:", response.data); // Log the fetched goals
+            console.log("Goals encontrados:", response.data); // Log the fetched goals
             setGoals(response.data);
         } catch (error) {
-            console.error("Error fetching goals:", error);
+            console.error("Error de busqueda de goals:", error);
         } finally {
             setLoading(false);
         }

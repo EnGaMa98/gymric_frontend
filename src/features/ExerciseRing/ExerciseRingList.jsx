@@ -47,7 +47,7 @@ function ExerciseRingList() {
             await ExerciseRingsService.destroy({ id });
             get();
         } catch (error) {
-            console.error("Error deleting exercise ring:", error);
+            console.error("Error al eliminar el anillo de ejercicio", error);
         } finally {
             setLoading(false);
         }
@@ -89,7 +89,7 @@ function ExerciseRingList() {
                                         <Button variant="contained" color="primary" onClick={() => handleEdit(exerciseRing)}>
                                             Editar
                                         </Button>
-                                        <Button variant="contained" color="secondary" onClick={() => handleDelete(exerciseRing.id)}>
+                                        <Button variant="contained" color="error" onClick={() => handleDelete(exerciseRing.id)}>
                                             Eliminar
                                         </Button>
                                     </Grid>

@@ -1,7 +1,8 @@
 import {Grid, Typography, FormControl, TextField, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import * as AuthService from "../../api/services/AuthService.js";
+
 function LoginView() {
     const navigate = useNavigate();
 
@@ -10,7 +11,14 @@ function LoginView() {
 
     const [loading, setLoading] = useState(false);
 
-    const disabled = !email || !password || loading;
+    const disabled = !email || !password || loading || localStorage.getItem('token');
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/');
+        }
+    }, [navigate]);
 
     const handleRegisterRedirect = () => {
         navigate('/register');

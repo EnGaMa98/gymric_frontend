@@ -13,14 +13,14 @@ function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing, isCreat
 
     useEffect(() => {
         if (exerciseRing) {
-            console.log("Editing exercise ring:", exerciseRing); 
+            console.log("Editando anillo de ejercicio", exerciseRing); 
             if (exerciseRing.fields) {
                 setMoveProgress(exerciseRing.fields.move_progress);
                 setExerciseProgress(exerciseRing.fields.exercise_progress);
                 setStandProgress(exerciseRing.fields.stand_progress);
                 setSelectedDate(dayjs(exerciseRing.fields.date));
             } else {
-                console.error("Exercise ring fields are undefined:", exerciseRing);
+                console.error("Campos indefinidos", exerciseRing);
             }
         }
     }, [exerciseRing]);
