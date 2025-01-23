@@ -98,15 +98,6 @@ function ExerciseRingEditDialog({ open, setOpen, onChange, exerciseRing, isCreat
                                         value={standProgress}
                                         onChange={(event) => setStandProgress(event.target.value)}
                                     />
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        fullWidth
-                                        onClick={handleSave}
-                                        disabled={loading}
-                                    >
-                                        Guardar
-                                    </Button>
                                 </FormControl>
                             </CardContent>
                         </Card>

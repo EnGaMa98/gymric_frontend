@@ -71,15 +71,6 @@ function GoalsCreateDialog({ open, setOpen, onChange }) {
                                         value={standGoal}
                                         onChange={(event) => setStandGoal(event.target.value)}
                                     />
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        fullWidth
-                                        onClick={handleSave}
-                                        disabled={loading}
-                                    >
-                                        Guardar
-                                    </Button>
                                 </FormControl>
                             </CardContent>
                         </Card>
